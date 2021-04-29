@@ -7,13 +7,15 @@ import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { MovieCardComponent } from './components/movie-card/movie-card.component';
 import { MovieListComponent } from './components/movie-list/movie-list.component';
+import { MovieDetailsComponent } from './components/movie-details/movie-details.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
     MovieCardComponent,
-    MovieListComponent
+    MovieListComponent,
+    MovieDetailsComponent
   ],
   imports: [
     BrowserModule,

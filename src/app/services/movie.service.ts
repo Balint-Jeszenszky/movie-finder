@@ -5,6 +5,8 @@ import { MovieSearchResult } from '../models/MovieSearchResult';
 import { Observable } from 'rxjs';
 import { MovieDetails } from '../models/MovieDetails';
 import { MovieCredits } from '../models/MovieCredits';
+import { Person } from '../models/Person';
+import { PersonMovieCredits } from '../models/PersonMovieCredits';
 
 @Injectable({
     providedIn: 'root'
@@ -28,5 +30,13 @@ export class MovieService {
 
     getRecommendationsForMovie(id: number): Observable<MovieSearchResult> {
         return this.http.get<MovieSearchResult>(`${this.apiUrl}/movie/${id}/recommendations?api_key=${apiKey}`);
+    }
+
+    getPersonDetails(id: number): Observable<Person> {
+        return this.http.get<Person>(`${this.apiUrl}/person/${id}?api_key=${apiKey}`);
+    }
+
+    getPersonMovies(id: number): Observable<PersonMovieCredits> {
+        return this.http.get<PersonMovieCredits>(`${this.apiUrl}/person/${id}/movie_credits?api_key=${apiKey}`);
     }
 }

@@ -26,7 +26,7 @@ export interface MovieDetails {
     overview?: string;
     poster_path?: string;
     backdrop_path?: string;
-    release_date: Date;
+    release_date: string;
     genres: Genre[];
     original_language: string;
     popularity: number;
@@ -35,5 +35,5 @@ export interface MovieDetails {
     spoken_languages: SpokenLanguages[];
     status: string;
     vote_average: number;
-    vote_number: number;
+    vote_count: number;
 }

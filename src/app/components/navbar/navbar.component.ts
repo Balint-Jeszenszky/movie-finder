@@ -21,4 +21,8 @@ export class NavbarComponent implements OnInit {
         }
     }
 
+    navLinkClicked() {
+        if (window.innerWidth < 992) (document.querySelector(".navbar-toggler") as HTMLElement).click();
+    }
+
 }

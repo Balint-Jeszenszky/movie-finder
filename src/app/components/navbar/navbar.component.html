@@ -9,18 +9,8 @@
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
 
-            <!-- <div class="flex-grow-1 d-flex">
-                <form class="form-inline my-2 my-lg-0 flex-grow-1 flex-lg-grow-0 flex-nowrap mx-0 mx-lg-auto">
-                    <input class="form-control mr-2" type="search" placeholder="Search" aria-label="Search" />
-                    <a>
-                        <button class="btn btn-outline-light my-2 my-sm-0" type="button" id="searchBtn">
-                            Search
-                        </button>
-                    </a>
-                </form>
-            </div> -->
             <ul class="navbar-nav ml-auto">
-                <li class="nav-item" *ngFor="let page of pages">
+                <li class="nav-item" *ngFor="let page of pages" (click)="navLinkClicked()">
                     <a routerLink="{{page.path}}" [ngClass]="getClasses(page)" class="nav-link">{{ page.name }}</a>
                 </li>
             </ul>

@@ -1,7 +1,8 @@
 <div class="container pt-3">
     <div class="row" *ngIf="movie">
         <div class="col-6 col-md-4 col-lg-3">
-            <img class="img-thumbnail" [src]="'https://image.tmdb.org/t/p/w500/' + movie.poster_path" />
+            <img *ngIf="movie.poster_path" class="img-thumbnail" [src]="'https://image.tmdb.org/t/p/w500/' + movie.poster_path">
+            <img *ngIf="!movie.poster_path" class="img-thumbnail" src="http://via.placeholder.com/500x750.png?text=No+image+available">
         </div>
         <div class="col-12 col-md-8 col-lg-9">
             <h1>{{ movie.title }}</h1>
@@ -55,7 +56,7 @@
             </div>
         </div>
     </div>
-    <div class="col-12">
+    <div class="col-12" *ngIf="recommendations">
         <h3>Similar movies</h3>
         <div class="row">
             <div class="col-6 col-md-4 col-lg-3 col-xl-2" *ngFor="let movie of recommendations.results">

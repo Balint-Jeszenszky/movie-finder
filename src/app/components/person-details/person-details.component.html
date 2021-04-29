@@ -1,6 +1,7 @@
 <div class="container pt-3">
     <div *ngIf="person" class="overflow-auto">
-        <img class="img-thumbnail w-25 float-left mr-3" [src]="'https://image.tmdb.org/t/p/w500/' + person.profile_path" />
+        <img *ngIf="person.profile_path" class="img-thumbnail w-25 float-left mr-3" [src]="'https://image.tmdb.org/t/p/w500/' + person.profile_path">
+        <img *ngIf="!person.profile_path" class="img-thumbnail w-25 float-left mr-3" src="http://via.placeholder.com/500x750.png?text=No+image+available">
         <h1>{{ person.name }}</h1>
         <p class="m-0"><b>Birth:</b> {{ person.birthday }} - {{ person.place_of_birth }}</p>
         <p class="m-0"><b>Known for:</b> {{ person.known_for_department }}</p>
@@ -14,7 +15,10 @@
         <h2>Cast in movies</h2>
         <div class="row">
             <div class="col-6 col-md-4 col-lg-3 col-xl-2" *ngFor="let movie of movieCredits.cast">
-                <a routerLink="/movie/{{movie.id}}"><img class="img-thumbnail" [src]="'https://image.tmdb.org/t/p/w500/' + movie.poster_path"></a>
+                <a routerLink="/movie/{{movie.id}}">
+                    <img *ngIf="movie.poster_path" class="img-thumbnail" [src]="'https://image.tmdb.org/t/p/w500/' + movie.poster_path">
+                    <img *ngIf="!movie.poster_path" class="img-thumbnail" src="http://via.placeholder.com/500x750.png?text=No+image+available">
+                </a>
                 <p class="m-0"><b><a class="text-dark" routerLink="/movie/{{movie.id}}">{{ movie.title }}</a></b></p>
                 <p class="m-0">{{ movie.overview.substr(0, 30).split(' ').slice(0, -1).join(' ') }} ...</p>
                 <p>(As {{ movie.character }})</p>
@@ -25,7 +29,10 @@
         <h2>Crew in movies</h2>
         <div class="row">
             <div class="col-6 col-md-4 col-lg-3 col-xl-2" *ngFor="let movie of movieCredits.crew">
-                <a routerLink="/movie/{{movie.id}}"><img class="img-thumbnail" [src]="'https://image.tmdb.org/t/p/w500/' + movie.poster_path"></a>
+                <a routerLink="/movie/{{movie.id}}">
+                    <img *ngIf="movie.poster_path" class="img-thumbnail" [src]="'https://image.tmdb.org/t/p/w500/' + movie.poster_path">
+                    <img *ngIf="!movie.poster_path" class="img-thumbnail" src="http://via.placeholder.com/500x750.png?text=No+image+available">
+                </a>
                 <p class="m-0"><b><a class="text-dark" routerLink="/movie/{{movie.id}}">{{ movie.title }}</a></b></p>
                 <p class="m-0">{{ movie.overview.substr(0, 30).split(' ').slice(0, -1).join(' ') }} ...</p>
                 <p>(As {{ movie.job }})</p>

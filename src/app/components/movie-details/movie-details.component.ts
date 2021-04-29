@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { MovieCredits } from 'src/app/models/MovieCredits';
 import { MovieDetails } from 'src/app/models/MovieDetails';
+import { MovieSearchResult } from 'src/app/models/MovieSearchResult';
 import { MovieService } from 'src/app/services/movie.service';
 
 @Component({
@@ -11,6 +13,8 @@ import { MovieService } from 'src/app/services/movie.service';
 export class MovieDetailsComponent implements OnInit {
     movie: MovieDetails;
     favourite: boolean;
+    credits: MovieCredits;
+    recommendations: MovieSearchResult;
 
     constructor(
         private movieService: MovieService,
@@ -21,6 +25,8 @@ export class MovieDetailsComponent implements OnInit {
         this.route.params.subscribe(params => {
             const movieId = +params['id'];
             this.movieService.getMovieDetails(movieId).subscribe(movie => this.movie = movie);
+            this.movieService.getMovieCredits(movieId).subscribe(credits => this.credits = credits);
+            this.movieService.getRecommendationsForMovie(movieId).subscribe(recommendations => this.recommendations = recommendations);
         });
     }
 

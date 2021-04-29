@@ -27,5 +27,39 @@
             <h3>Production companies</h3>
             <p>{{ getProductionCompanies() }}</p>
         </div>
+        <div *ngIf="credits" class="col-12 col-md-6">
+            <h3>Credits</h3>
+            <div class="row">
+                <div class="col-6">
+                    <h4>Cast</h4>
+                    <div *ngFor="let person of credits.cast">
+                        <a routerLink="/person/{{person.id}}" *ngIf="person.profile_path"><img class="img-thumbnail" [src]="'https://image.tmdb.org/t/p/w500/' + person.profile_path"></a>
+                        <a routerLink="/person/{{person.id}}" *ngIf="!person.profile_path"><img class="img-thumbnail" src="http://via.placeholder.com/500x750.png?text=No+image+available"></a>
+                        <p class="m-0"><b><a class="text-dark" routerLink="/person/{{person.id}}">{{ person.name }}</a></b></p>
+                        <p>{{ person.character }}</p>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <h4>Crew</h4>
+                    <div *ngFor="let person of credits.crew">
+                        <a routerLink="/person/{{person.id}}" *ngIf="person.profile_path"><img class="img-thumbnail" [src]="'https://image.tmdb.org/t/p/w500/' + person.profile_path"></a>
+                        <a routerLink="/person/{{person.id}}" *ngIf="!person.profile_path"><img class="img-thumbnail" src="http://via.placeholder.com/500x750.png?text=No+image+available"></a>
+                        <p class="m-0"><b><a class="text-dark" routerLink="/person/{{person.id}}">{{ person.name }}</a></b></p>
+                        <p>{{ person.job }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-6">
+            <h3>Similar movies</h3>
+            <h4>Recommendations</h4>
+            <div class="row">
+                <div class="col-6" *ngFor="let movie of recommendations.results">
+                    <a routerLink="/movie/{{movie.id}}"><img class="img-thumbnail" [src]="'https://image.tmdb.org/t/p/w500/' + movie.poster_path"></a>
+                    <p class="m-0"><b><a class="text-dark" routerLink="/movie/{{movie.id}}">{{ movie.title }}</a></b></p>
+                    <p>{{ movie.overview.substr(0, 30).split(' ').slice(0, -1).join(' ') }} ...</p>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

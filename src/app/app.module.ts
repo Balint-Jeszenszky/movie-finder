@@ -8,6 +8,7 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { MovieCardComponent } from './components/movie-card/movie-card.component';
 import { MovieListComponent } from './components/movie-list/movie-list.component';
 import { MovieDetailsComponent } from './components/movie-details/movie-details.component';
+import { PersonDetailsComponent } from './components/person-details/person-details.component';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import { MovieDetailsComponent } from './components/movie-details/movie-details.
     NavbarComponent,
     MovieCardComponent,
     MovieListComponent,
-    MovieDetailsComponent
+    MovieDetailsComponent,
+    PersonDetailsComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,21 @@
+<div>
+    <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+            <li class="page-item">
+                <a class="page-link" tabIndex={-1}>&laquo;</a>
+            </li>
+            <li class="page-item" *ngIf="page > 3">
+                <a class="page-link text-dark">...</a>
+            </li>
+            <li *ngFor="let n of getPageNumbers()" [ngClass]="getClasses(n)">
+                <a class="page-link" routerLink="/" [queryParams]="{ page: n }">{{ n }}</a>
+            </li>
+            <li class="page-item" *ngIf="page < pages - 3">
+                <a class="page-link text-dark">...</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" >&raquo;</a>
+            </li>
+        </ul>
+    </nav>
+</div>

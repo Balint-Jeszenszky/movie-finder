@@ -9,6 +9,7 @@ import { MovieCardComponent } from './components/movie-card/movie-card.component
 import { MovieListComponent } from './components/movie-list/movie-list.component';
 import { MovieDetailsComponent } from './components/movie-details/movie-details.component';
 import { PersonDetailsComponent } from './components/person-details/person-details.component';
+import { PagerComponent } from './components/pager/pager.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { PersonDetailsComponent } from './components/person-details/person-detai
     MovieCardComponent,
     MovieListComponent,
     MovieDetailsComponent,
-    PersonDetailsComponent
+    PersonDetailsComponent,
+    PagerComponent
   ],
   imports: [
     BrowserModule,

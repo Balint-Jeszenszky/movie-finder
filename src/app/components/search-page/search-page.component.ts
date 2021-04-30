@@ -43,4 +43,12 @@ export class SearchPageComponent implements OnInit {
         this.router.navigate(['/search'], { queryParams: { search: this.search, page: 1 }, queryParamsHandling: 'merge' });
     }
 
+    resultNumber() {
+        const resultsPerPage = this.movies.length;
+        const page = this.page;
+        const from = resultsPerPage * page - resultsPerPage + 1;
+        const to = resultsPerPage * page
+        return {from, to};
+    }
+
 }

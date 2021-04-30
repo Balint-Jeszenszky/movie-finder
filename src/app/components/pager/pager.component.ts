@@ -23,7 +23,7 @@ export class PagerComponent implements OnInit {
     getPageNumbers() {
         const diff = this.pages - this.page;
         const start = Math.max(1, this.page - 2 - ((diff < 3) ? 3 - diff : 0));
-        const n = this.page < 4 || this.page > this.pages - 4 ? 6 : 5;
+        const n = Math.min(this.page < 4 || this.page > this.pages - 4 ? 6 : 5, this.pages);
         return [...Array(n).keys()].map(i => i + start );
     }
 

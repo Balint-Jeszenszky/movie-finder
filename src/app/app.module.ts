@@ -14,6 +14,8 @@ import { PagerComponent } from './components/pager/pager.component';
 import { SearchPageComponent } from './components/search-page/search-page.component';
 import { FavouritesPageComponent } from './components/favourites-page/favourites-page.component';
 import { PersonCardComponent } from './components/person-card/person-card.component';
+import { TvCardComponent } from './components/tv-card/tv-card.component';
+import { TvDetailsComponent } from './components/tv-details/tv-details.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +28,9 @@ import { PersonCardComponent } from './components/person-card/person-card.compon
     PagerComponent,
     SearchPageComponent,
     FavouritesPageComponent,
-    PersonCardComponent
+    PersonCardComponent,
+    TvCardComponent,
+    TvDetailsComponent
   ],
   imports: [
     BrowserModule,

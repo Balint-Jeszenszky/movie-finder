@@ -1,0 +1,75 @@
+<div class="container pt-3">
+    <div class="row" *ngIf="tv">
+        <div class="col-6 col-md-4 col-lg-3">
+            <img *ngIf="tv.poster_path" class="img-thumbnail" [src]="'https://image.tmdb.org/t/p/w500/' + tv.poster_path">
+            <img *ngIf="!tv.poster_path" class="img-thumbnail" src="http://via.placeholder.com/500x750.png?text=No+image+available">
+        </div>
+        <div class="col-12 col-md-8 col-lg-9">
+            <h1>{{ tv.name }}</h1>
+            <p class="m-0">Status: {{ tv.status }}</p>
+            <p class="m-0">First air: {{ tv.first_air_date }}</p>
+            <p class="m-0">Last air: {{ tv.last_air_date }}</p>
+            <p>{{ tv.vote_average }} / 10 ({{ tv.vote_count }} votes)</p>
+            <p>{{ tv.overview }}</p>
+        </div>
+        <div class="col-12 col-md-6">
+            <h2>Languages</h2>
+            <p class="m-0">Original: {{ tv.original_language }}</p>
+            <p>Spoken languages: {{ getSpokenLanguages() }}</p>
+        </div>
+        <div class="col-12 col-md-6">
+            <h2>Genres</h2>
+            <p>{{ getGenres() }}</p>
+        </div>
+        <div class="col-12">
+            <h2>Seasons</h2>
+            <div class="row">
+                <div *ngFor="let season of tv.seasons" class="col-6 col-md-4 col-lg-3 col-xl-2">
+                    <img *ngIf="season.poster_path" class="img-thumbnail" [src]="'https://image.tmdb.org/t/p/w500/' + season.poster_path">
+                    <img *ngIf="!season.poster_path" class="img-thumbnail"src="http://via.placeholder.com/500x750.png?text=No+image+available">
+                    <p class="m-0"><b>{{ season.name }}</b></p>
+                    <p class="m-0">{{ season.episode_count }} episodes</p>
+                    <p>{{ season.air_date }}</p>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="credits" class="col-12">
+            <h2>Credits</h2>
+            <h3>Cast</h3>
+            <div class="row">
+                <div *ngFor="let person of credits.cast" class="col-6 col-md-4 col-lg-3 col-xl-2">
+                    <a routerLink="/person/{{person.id}}" *ngIf="person.profile_path"><img class="img-thumbnail"
+                            [src]="'https://image.tmdb.org/t/p/w500/' + person.profile_path"></a>
+                    <a routerLink="/person/{{person.id}}" *ngIf="!person.profile_path"><img class="img-thumbnail"
+                            src="http://via.placeholder.com/500x750.png?text=No+image+available"></a>
+                    <p class="m-0"><b><a class="text-dark" routerLink="/person/{{person.id}}">{{ person.name }}</a></b>
+                    </p>
+                    <p>{{ person.character }}</p>
+                </div>
+            </div>
+            <h3>Crew</h3>
+            <div class="row">
+                <div *ngFor="let person of credits.crew" class="col-6 col-md-4 col-lg-3 col-xl-2">
+                    <a routerLink="/person/{{person.id}}" *ngIf="person.profile_path"><img class="img-thumbnail"
+                            [src]="'https://image.tmdb.org/t/p/w500/' + person.profile_path"></a>
+                    <a routerLink="/person/{{person.id}}" *ngIf="!person.profile_path"><img class="img-thumbnail"
+                            src="http://via.placeholder.com/500x750.png?text=No+image+available"></a>
+                    <p class="m-0"><b><a class="text-dark" routerLink="/person/{{person.id}}">{{ person.name }}</a></b>
+                    </p>
+                    <p>{{ person.job }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="recommendations">
+        <h3>Similar tv shows</h3>
+        <div class="row">
+            <div class="col-6 col-md-4 col-lg-3 col-xl-2" *ngFor="let tv of recommendations.results">
+                <a routerLink="/tv/{{tv.id}}"><img class="img-thumbnail"
+                        [src]="'https://image.tmdb.org/t/p/w500/' + tv.poster_path"></a>
+                <p class="m-0"><b><a class="text-dark" routerLink="/tv/{{tv.id}}">{{ tv.name }}</a></b></p>
+                <p>{{ tv.overview.substr(0, 30).split(' ').slice(0, -1).join(' ') }} ...</p>
+            </div>
+        </div>
+    </div>
+</div>

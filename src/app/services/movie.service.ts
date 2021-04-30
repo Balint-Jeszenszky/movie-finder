@@ -8,6 +8,8 @@ import { MovieCredits } from '../models/MovieCredits';
 import { PersonDetails } from '../models/PersonDetails';
 import { PersonMovieCredits } from '../models/PersonMovieCredits';
 import { PeopleSearchReult } from '../models/PeopleSearchResult';
+import { TvSearchResult } from '../models/TvSearchResult';
+import { TvDetails } from '../models/TvDetails';
 
 @Injectable({
     providedIn: 'root'
@@ -47,5 +49,21 @@ export class MovieService {
 
     getPeopleBySearchString(query: string, page: number): Observable<PeopleSearchReult> {
         return this.http.get<PeopleSearchReult>(`${this.apiUrl}/search/person?api_key=${apiKey}&query=${query}&page=${page}`);
+    }
+
+    getTvBySearchString(query: string, page: number): Observable<TvSearchResult> {
+        return this.http.get<TvSearchResult>(`${this.apiUrl}/search/tv?api_key=${apiKey}&query=${query}&page=${page}`);
+    }
+
+    getTvDetails(id: number): Observable<TvDetails> {
+        return this.http.get<TvDetails>(`${this.apiUrl}/tv/${id}?api_key=${apiKey}`);
+    }
+
+    getTvCredits(id: number): Observable<MovieCredits> {
+        return this.http.get<MovieCredits>(`${this.apiUrl}/tv/${id}/credits?api_key=${apiKey}`);
+    }
+
+    getRecommendationsForTv(id: number): Observable<TvSearchResult> {
+        return this.http.get<TvSearchResult>(`${this.apiUrl}/tv/${id}/recommendations?api_key=${apiKey}`);
     }
 }

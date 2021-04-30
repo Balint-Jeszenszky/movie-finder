@@ -1,4 +1,4 @@
-interface Genre {
+export interface Genre {
     id: number;
     name: string;
 }
@@ -15,7 +15,7 @@ interface ProductionCountry {
     name: string;
 }
 
-interface SpokenLanguages {
+export interface SpokenLanguage {
     iso_639_1: string;
     name: string;
 }
@@ -32,7 +32,7 @@ export interface MovieDetails {
     popularity: number;
     production_companies: ProductionCompany[];
     production_countries: ProductionCountry[];
-    spoken_languages: SpokenLanguages[];
+    spoken_languages: SpokenLanguage[];
     status: string;
     vote_average: number;
     vote_count: number;

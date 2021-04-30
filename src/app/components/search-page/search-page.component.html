@@ -23,5 +23,8 @@
     <div class="row" *ngIf="searchType === 'person'">
         <app-person-card class="col-sm-12 col-md-6 col-lg-4 col-xl-3 mb-3" *ngFor="let person of people" [person]="person"></app-person-card>
     </div>
+    <div class="row" *ngIf="searchType === 'tv'">
+        <app-tv-card class="col-sm-12 col-md-6 col-lg-4 col-xl-3 mb-3" *ngFor="let tv of tvShows" [tv]="tv"></app-tv-card>
+    </div>
     <app-pager *ngIf="totalPages" [pages]="totalPages" baseUrl="/search"></app-pager>
 </div>

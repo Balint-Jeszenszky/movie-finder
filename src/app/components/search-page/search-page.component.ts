@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Movie } from 'src/app/models/Movie';
 import { Person } from 'src/app/models/Person';
+import { Tv } from 'src/app/models/Tv';
 import { MovieService } from 'src/app/services/movie.service';
 
 @Component({
@@ -13,11 +14,12 @@ export class SearchPageComponent implements OnInit {
     search: string;
     movies: Movie[];
     people: Person[];
+    tvShows: Tv[];
     page: number;
     totalPages: number;
     results: number;
-    searchTypes = ['movie', 'person'];
-    searchType: 'movie' | 'person';
+    searchTypes = ['movie', 'person', 'tv'];
+    searchType: 'movie' | 'person' | 'tv';
 
     constructor(
         private movieService: MovieService,
@@ -48,6 +50,12 @@ export class SearchPageComponent implements OnInit {
                 this.totalPages = people.total_pages;
                 this.results = people.total_results;
             });
+        } else if (this.search && this.searchType === 'tv') {
+            this.movieService.getTvBySearchString(this.search, this.page).subscribe(tv => {
+                this.tvShows = tv.results;
+                this.totalPages = tv.total_pages;
+                this.results = tv.total_results;
+            });
         }
     }
 
@@ -56,7 +64,7 @@ export class SearchPageComponent implements OnInit {
     }
 
     resultNumber() {
-        const resultsPerPage = this.movies ? this.movies.length : this.people.length;
+        const resultsPerPage = this.movies?.length || this.people?.length || this.tvShows?.length;
         const page = this.page;
         const from = resultsPerPage * page - resultsPerPage + 1;
         const to = resultsPerPage * page

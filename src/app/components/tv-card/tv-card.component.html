@@ -1,0 +1,12 @@
+<div class="card">
+    <a routerLink="/tv/{{ tv.id }}">
+        <img *ngIf="tv.poster_path" [src]="'https://image.tmdb.org/t/p/w500/' + tv.poster_path" class="card-img-top">
+        <img *ngIf="!tv.poster_path" src="http://via.placeholder.com/500x750.png?text=No+image+available" class="card-img-top">
+    </a>
+    <div class="card-body">
+        <a routerLink="/tv/{{ tv.id }}" class="text-dark">
+            <h5 class="card-title">{{ tv.name }}</h5>
+        </a>
+        <p class="card-text">{{ tv.overview.substr(0, 100).split(' ').slice(0, -1).join(' ') }} ...</p>
+    </div>
+</div>

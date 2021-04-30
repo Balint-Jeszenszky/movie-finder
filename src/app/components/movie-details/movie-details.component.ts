@@ -27,7 +27,7 @@ export class MovieDetailsComponent implements OnInit {
             const movieId = +params['id'];
             this.movieService.getMovieDetails(movieId).subscribe(movie => {
                 this.movie = movie;
-                const favourites = JSON.parse(localStorage.getItem('favourites')) as Movie[] | null;
+                const favourites = JSON.parse(localStorage.getItem('favourite-movies')) as Movie[] | null;
                 this.favourite = !!favourites?.find(m => m.id === this.movie.id);
             });
             this.movieService.getMovieCredits(movieId).subscribe(credits => this.credits = credits);
@@ -52,7 +52,7 @@ export class MovieDetailsComponent implements OnInit {
     }
 
     setFavourite() {
-        let favourites = JSON.parse(localStorage.getItem('favourites')) as Movie[] | null || [];
+        let favourites = JSON.parse(localStorage.getItem('favourite-movies')) as Movie[] | null || [];
         if (this.favourite) {
             favourites = favourites.filter(m => m.id !== this.movie.id)
         } else {
@@ -64,7 +64,7 @@ export class MovieDetailsComponent implements OnInit {
             });
         }
         this.favourite = !this.favourite;
-        localStorage.setItem('favourites', JSON.stringify(favourites));
+        localStorage.setItem('favourite-movies', JSON.stringify(favourites));
     }
 
 }

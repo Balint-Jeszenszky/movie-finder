@@ -5,7 +5,13 @@
             <img *ngIf="!tv.poster_path" class="img-thumbnail" src="http://via.placeholder.com/500x750.png?text=No+image+available">
         </div>
         <div class="col-12 col-md-8 col-lg-9">
-            <h1>{{ tv.name }}</h1>
+            <h1>
+                {{ tv.name }}
+                <span class="float-right" (click)="setFavourite()">
+                    <i *ngIf="favourite" class="fas fa-star text-warning"></i>
+                    <i *ngIf="!favourite" class="far fa-star"></i>
+                </span>
+            </h1>
             <p class="m-0">Status: {{ tv.status }}</p>
             <p class="m-0">First air: {{ tv.first_air_date }}</p>
             <p class="m-0">Last air: {{ tv.last_air_date }}</p>

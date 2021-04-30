@@ -1,4 +1,4 @@
-<div class="card">
+<div class="card h-100">
     <a routerLink="/tv/{{ tv.id }}">
         <img *ngIf="tv.poster_path" [src]="'https://image.tmdb.org/t/p/w500/' + tv.poster_path" class="card-img-top">
         <img *ngIf="!tv.poster_path" src="http://via.placeholder.com/500x750.png?text=No+image+available" class="card-img-top">
@@ -8,5 +8,14 @@
             <h5 class="card-title">{{ tv.name }}</h5>
         </a>
         <p class="card-text">{{ tv.overview.substr(0, 100).split(' ').slice(0, -1).join(' ') }} ...</p>
+    </div>
+    <div class="card-footer d-flex justify-content-between">
+        <a routerLink="/tv/{{ tv.id }}" class="card-link smaller">
+            <span class="dark-link">Details</span>
+        </a>
+        <span (click)="setFavourite()">
+            <i *ngIf="favourite" class="fas fa-star text-warning"></i>
+            <i *ngIf="!favourite" class="far fa-star"></i>
+        </span>
     </div>
 </div>

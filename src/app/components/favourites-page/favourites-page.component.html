@@ -1,6 +1,23 @@
 <div class="container pt-3">
-    <div class="row" *ngIf="favourites.length">
-        <app-movie-card class="col-sm-12 col-md-6 col-lg-4 col-xl-3 mb-3" *ngFor="let movie of favourites" [movie]="movie"></app-movie-card>
+    <div>
+        <h1>Movies</h1>
+        <div class="row">
+            <app-movie-card class="col-sm-12 col-md-6 col-lg-4 col-xl-3 mb-3" *ngFor="let movie of favouriteMovies" [movie]="movie"></app-movie-card>
+        </div>
+        <p *ngIf="!favouriteMovies.length">You haven't got any favourites yet.</p>
     </div>
-    <h1 *ngIf="!favourites.length">You haven't got favourites yet.</h1>
+    <div>
+        <h1>Tv shows</h1>
+        <div class="row">
+            <app-tv-card class="col-sm-12 col-md-6 col-lg-4 col-xl-3 mb-3" *ngFor="let tv of favouriteTvs" [tv]="tv"></app-tv-card>
+        </div>
+        <p *ngIf="!favouriteTvs.length">You haven't got any favourites yet.</p>
+    </div>
+    <div>
+        <h1>People</h1>
+        <div class="row">
+            <app-person-card class="col-sm-12 col-md-6 col-lg-4 col-xl-3 mb-3" *ngFor="let person of favouritePeople" [person]="person"></app-person-card>
+        </div>
+        <p *ngIf="!favouritePeople.length">You haven't got any favourites yet.</p>
+    </div>
 </div>

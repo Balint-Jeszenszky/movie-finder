@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Person } from 'src/app/models/Person';
 import { PersonDetails } from 'src/app/models/PersonDetails';
 import { PersonMovieCredits } from 'src/app/models/PersonMovieCredits';
 import { MovieService } from 'src/app/services/movie.service';
@@ -11,6 +12,7 @@ import { MovieService } from 'src/app/services/movie.service';
 })
 export class PersonDetailsComponent implements OnInit {
     person: PersonDetails;
+    favourite: boolean;
     movieCredits: PersonMovieCredits;
 
     constructor(
@@ -21,7 +23,11 @@ export class PersonDetailsComponent implements OnInit {
     ngOnInit(): void {
         this.route.params.subscribe(params => {
             const personId = +params['id'];
-            this.movieService.getPersonDetails(personId).subscribe(person => this.person = person);
+            this.movieService.getPersonDetails(personId).subscribe(person => {
+                this.person = person;
+                const favourites = JSON.parse(localStorage.getItem('favourite-people')) as Person[] | null;
+                this.favourite = !!favourites?.find(m => m.id === this.person.id);
+            });
             this.movieService.getPersonMovies(personId).subscribe(movieCredits => this.movieCredits = movieCredits);
         });
     }
@@ -37,6 +43,22 @@ export class PersonDetailsComponent implements OnInit {
             case 3:
                 return 'Non-binary';
         }
+    }
+
+    setFavourite() {
+        let favourites = JSON.parse(localStorage.getItem('favourite-movies')) as Person[] | null || [];
+        if (this.favourite) {
+            favourites = favourites.filter(m => m.id !== this.person.id)
+        } else {
+            favourites.push({
+                id: this.person.id,
+                name: this.person.name,
+                known_for_department: this.person.known_for_department,
+                profile_path: this.person.profile_path
+            });
+        }
+        this.favourite = !this.favourite;
+        localStorage.setItem('favourite-movies', JSON.stringify(favourites));
     }
 
 }

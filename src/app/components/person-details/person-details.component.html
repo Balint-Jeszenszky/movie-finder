@@ -2,7 +2,13 @@
     <div *ngIf="person" class="overflow-auto">
         <img *ngIf="person.profile_path" class="img-thumbnail w-25 float-left mr-3" [src]="'https://image.tmdb.org/t/p/w500/' + person.profile_path">
         <img *ngIf="!person.profile_path" class="img-thumbnail w-25 float-left mr-3" src="http://via.placeholder.com/500x750.png?text=No+image+available">
-        <h1>{{ person.name }}</h1>
+        <h1>
+            {{ person.name }}
+            <span class="float-right" (click)="setFavourite()">
+                <i *ngIf="favourite" class="fas fa-star text-warning"></i>
+                <i *ngIf="!favourite" class="far fa-star"></i>
+            </span>
+        </h1>
         <p class="m-0"><b>Birth:</b> {{ person.birthday }} - {{ person.place_of_birth }}</p>
         <p class="m-0"><b>Known for:</b> {{ person.known_for_department }}</p>
         <p class="m-0" *ngIf="person.deathday"><b>Death:</b> {{ person.deathday }}</p>

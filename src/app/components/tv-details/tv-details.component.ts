@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MovieCredits } from 'src/app/models/MovieCredits';
+import { Tv } from 'src/app/models/Tv';
 import { TvDetails } from 'src/app/models/TvDetails';
 import { TvSearchResult } from 'src/app/models/TvSearchResult';
 import { MovieService } from 'src/app/services/movie.service';
@@ -12,6 +13,7 @@ import { MovieService } from 'src/app/services/movie.service';
 })
 export class TvDetailsComponent implements OnInit {
     tv: TvDetails;
+    favourite: boolean;
     credits: MovieCredits;
     recommendations: TvSearchResult;
 
@@ -23,7 +25,11 @@ export class TvDetailsComponent implements OnInit {
     ngOnInit(): void {
         this.route.params.subscribe(params => {
             const tvId = +params['id'];
-            this.movieService.getTvDetails(tvId).subscribe(tv => this.tv = tv);
+            this.movieService.getTvDetails(tvId).subscribe(tv => {
+                this.tv = tv;
+                const favourites = JSON.parse(localStorage.getItem('favourite-tvshows')) as Tv[] | null;
+                this.favourite = !!favourites?.find(m => m.id === this.tv.id);
+            });
             this.movieService.getTvCredits(tvId).subscribe(credits => this.credits = credits);
             this.movieService.getRecommendationsForTv(tvId).subscribe(recommendations => this.recommendations = recommendations);
         });
@@ -35,6 +41,22 @@ export class TvDetailsComponent implements OnInit {
 
     getGenres(): string {
         return this.tv.genres.map(g => g.name).join(', ');
+    }
+
+    setFavourite() {
+        let favourites = JSON.parse(localStorage.getItem('favourite-tvshows')) as Tv[] | null || [];
+        if (this.favourite) {
+            favourites = favourites.filter(m => m.id !== this.tv.id)
+        } else {
+            favourites.push({
+                id: this.tv.id,
+                name: this.tv.name,
+                overview: this.tv.overview,
+                poster_path: this.tv.poster_path
+            });
+        }
+        this.favourite = !this.favourite;
+        localStorage.setItem('favourite-tvshows', JSON.stringify(favourites));
     }
 
 }

@@ -1,6 +1,7 @@
 <div class="card">
     <a routerLink="/movie/{{ movie.id }}">
-        <img [src]="'https://image.tmdb.org/t/p/w500/' + movie.poster_path" class="card-img-top">
+        <img *ngIf="movie.poster_path" [src]="'https://image.tmdb.org/t/p/w500/' + movie.poster_path" class="card-img-top">
+        <img *ngIf="!movie.poster_path" src="http://via.placeholder.com/500x750.png?text=No+image+available" class="card-img-top">
     </a>
     <div class="card-body">
         <a routerLink="/movie/{{ movie.id }}" class="text-dark">

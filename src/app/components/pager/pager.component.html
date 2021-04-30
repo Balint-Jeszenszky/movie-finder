@@ -8,7 +8,7 @@
                 <a class="page-link text-dark">...</a>
             </li>
             <li *ngFor="let n of getPageNumbers()" [ngClass]="getClasses(n)">
-                <a class="page-link" routerLink="/" [queryParams]="{ page: n }">{{ n }}</a>
+                <a class="page-link" routerLink="{{baseUrl}}" [queryParams]="{ page: n }" queryParamsHandling="merge">{{ n }}</a>
             </li>
             <li class="page-item" *ngIf="page < pages - 3">
                 <a class="page-link text-dark">...</a>

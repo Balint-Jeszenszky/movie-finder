@@ -8,6 +8,7 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class PagerComponent implements OnInit {
     @Input() pages: number;
+    @Input() baseUrl: string;
     page: number;
 
     constructor(private route: ActivatedRoute) { }

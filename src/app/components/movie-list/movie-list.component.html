@@ -2,5 +2,5 @@
     <div class="row">
         <app-movie-card  class="col-sm-12 col-md-6 col-lg-4 col-xl-3 mb-3" *ngFor="let movie of movies" [movie]="movie"></app-movie-card>
     </div>
-    <app-pager [pages]="totalPages"></app-pager>
+    <app-pager [pages]="totalPages" baseUrl="/" ></app-pager>
 </div>

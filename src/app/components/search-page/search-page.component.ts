@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Movie } from 'src/app/models/Movie';
+import { Person } from 'src/app/models/Person';
 import { MovieService } from 'src/app/services/movie.service';
 
 @Component({
@@ -11,9 +12,12 @@ import { MovieService } from 'src/app/services/movie.service';
 export class SearchPageComponent implements OnInit {
     search: string;
     movies: Movie[];
+    people: Person[];
     page: number;
     totalPages: number;
     results: number;
+    searchTypes = ['movie', 'person'];
+    searchType: 'movie' | 'person';
 
     constructor(
         private movieService: MovieService,
@@ -27,14 +31,22 @@ export class SearchPageComponent implements OnInit {
         this.route.queryParams.subscribe(params => {
             const page = +params['page'] || 1;
             this.page = page;
-            const query = params['search'];
-            this.search = query;
+            const search = params['search'];
+            this.search = search;
+            const searchType = params['type'] || 'movie';
+            this.searchType = searchType;
         });
-        if (this.search) {
+        if (this.search && this.searchType === 'movie') {
             this.movieService.getMoviesBySearchString(this.search, this.page).subscribe(movies => {
                 this.movies = movies.results;
                 this.totalPages = movies.total_pages;
                 this.results = movies.total_results;
+            });
+        } else if (this.search && this.searchType === 'person') {
+            this.movieService.getPeopleBySearchString(this.search, this.page).subscribe(people => {
+                this.people = people.results;
+                this.totalPages = people.total_pages;
+                this.results = people.total_results;
             });
         }
     }
@@ -44,11 +56,15 @@ export class SearchPageComponent implements OnInit {
     }
 
     resultNumber() {
-        const resultsPerPage = this.movies.length;
+        const resultsPerPage = this.movies ? this.movies.length : this.people.length;
         const page = this.page;
         const from = resultsPerPage * page - resultsPerPage + 1;
         const to = resultsPerPage * page
         return {from, to};
+    }
+
+    typeChange(event) {
+        this.router.navigate(['/search'], { queryParams: { search: '', page: 1, type: event.target.value }, queryParamsHandling: 'merge' });
     }
 
 }

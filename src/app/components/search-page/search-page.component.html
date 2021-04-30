@@ -2,21 +2,26 @@
     <div class="overflow-auto">
         <form (ngSubmit)="onSubmit()">
             <input type="text" class="form-control" placeholder="Search" name="search" [(ngModel)]="search">
-            <div class="form-check form-check-inline mt-3">
-                <input class="form-check-input" type="radio" id="movieSearch" checked>
-                <label class="form-check-label" for="movieSearch">Movie</label>
-            </div>
-            <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" id="personSearch">
-                <label class="form-check-label" for="personSearch">Person</label>
+            <div class="form-check form-check-inline mt-3" *ngFor="let t of searchTypes">
+                <input 
+                    class="form-check-input" 
+                    type="radio" 
+                    id="{{t}}Search" 
+                    value="{{t}}"
+                    (change)="typeChange($event)"
+                    [checked]="searchType === t">
+                <label class="form-check-label" for="{{t}}Search">{{t}}</label>
             </div>
             <input type="submit" value="Search" class="btn btn-primary float-right mt-2">
         </form>
         <hr>
-        <p>{{ resultNumber().from }} - {{ resultNumber().to }} / {{ results }} result</p>
+        <p *ngIf="totalPages">{{ resultNumber().from }} - {{ resultNumber().to }} / {{ results }} result</p>
     </div>
-    <div class="row">
+    <div class="row" *ngIf="searchType === 'movie'">
         <app-movie-card class="col-sm-12 col-md-6 col-lg-4 col-xl-3 mb-3" *ngFor="let movie of movies" [movie]="movie"></app-movie-card>
+    </div>
+    <div class="row" *ngIf="searchType === 'person'">
+        <app-person-card class="col-sm-12 col-md-6 col-lg-4 col-xl-3 mb-3" *ngFor="let person of people" [person]="person"></app-person-card>
     </div>
     <app-pager *ngIf="totalPages" [pages]="totalPages" baseUrl="/search"></app-pager>
 </div>

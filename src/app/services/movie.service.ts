@@ -5,8 +5,9 @@ import { MovieSearchResult } from '../models/MovieSearchResult';
 import { Observable } from 'rxjs';
 import { MovieDetails } from '../models/MovieDetails';
 import { MovieCredits } from '../models/MovieCredits';
-import { Person } from '../models/Person';
+import { PersonDetails } from '../models/PersonDetails';
 import { PersonMovieCredits } from '../models/PersonMovieCredits';
+import { PeopleSearchReult } from '../models/PeopleSearchResult';
 
 @Injectable({
     providedIn: 'root'
@@ -32,8 +33,8 @@ export class MovieService {
         return this.http.get<MovieSearchResult>(`${this.apiUrl}/movie/${id}/recommendations?api_key=${apiKey}`);
     }
 
-    getPersonDetails(id: number): Observable<Person> {
-        return this.http.get<Person>(`${this.apiUrl}/person/${id}?api_key=${apiKey}`);
+    getPersonDetails(id: number): Observable<PersonDetails> {
+        return this.http.get<PersonDetails>(`${this.apiUrl}/person/${id}?api_key=${apiKey}`);
     }
 
     getPersonMovies(id: number): Observable<PersonMovieCredits> {
@@ -42,5 +43,9 @@ export class MovieService {
 
     getMoviesBySearchString(query: string, page: number): Observable<MovieSearchResult> {
         return this.http.get<MovieSearchResult>(`${this.apiUrl}/search/movie?api_key=${apiKey}&query=${query}&page=${page}`);
+    }
+
+    getPeopleBySearchString(query: string, page: number): Observable<PeopleSearchReult> {
+        return this.http.get<PeopleSearchReult>(`${this.apiUrl}/search/person?api_key=${apiKey}&query=${query}&page=${page}`);
     }
 }

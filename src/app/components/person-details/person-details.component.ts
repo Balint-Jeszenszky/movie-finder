@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Person } from 'src/app/models/Person';
+import { PersonDetails } from 'src/app/models/PersonDetails';
 import { PersonMovieCredits } from 'src/app/models/PersonMovieCredits';
 import { MovieService } from 'src/app/services/movie.service';
 
@@ -10,7 +10,7 @@ import { MovieService } from 'src/app/services/movie.service';
     styleUrls: ['./person-details.component.css']
 })
 export class PersonDetailsComponent implements OnInit {
-    person: Person;
+    person: PersonDetails;
     movieCredits: PersonMovieCredits;
 
     constructor(

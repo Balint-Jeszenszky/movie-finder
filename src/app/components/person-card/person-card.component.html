@@ -1,0 +1,12 @@
+<div class="card">
+    <a routerLink="/person/{{ person.id }}">
+        <img *ngIf="person.profile_path" [src]="'https://image.tmdb.org/t/p/w500/' + person.profile_path" class="card-img-top">
+        <img *ngIf="!person.profile_path" src="http://via.placeholder.com/500x750.png?text=No+image+available" class="card-img-top">
+    </a>
+    <div class="card-body">
+        <a routerLink="/person/{{ person.id }}" class="text-dark">
+            <h5 class="card-title">{{ person.name }}</h5>
+        </a>
+        <p class="card-text">Known for: {{ person.known_for_department }}<p>
+    </div>
+</div>

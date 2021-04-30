@@ -13,6 +13,7 @@ import { PersonDetailsComponent } from './components/person-details/person-detai
 import { PagerComponent } from './components/pager/pager.component';
 import { SearchPageComponent } from './components/search-page/search-page.component';
 import { FavouritesPageComponent } from './components/favourites-page/favourites-page.component';
+import { PersonCardComponent } from './components/person-card/person-card.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { FavouritesPageComponent } from './components/favourites-page/favourites
     PersonDetailsComponent,
     PagerComponent,
     SearchPageComponent,
-    FavouritesPageComponent
+    FavouritesPageComponent,
+    PersonCardComponent
   ],
   imports: [
     BrowserModule,

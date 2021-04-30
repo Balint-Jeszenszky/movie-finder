@@ -12,6 +12,7 @@ import { MovieDetailsComponent } from './components/movie-details/movie-details.
 import { PersonDetailsComponent } from './components/person-details/person-details.component';
 import { PagerComponent } from './components/pager/pager.component';
 import { SearchPageComponent } from './components/search-page/search-page.component';
+import { FavouritesPageComponent } from './components/favourites-page/favourites-page.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { SearchPageComponent } from './components/search-page/search-page.compon
     MovieDetailsComponent,
     PersonDetailsComponent,
     PagerComponent,
-    SearchPageComponent
+    SearchPageComponent,
+    FavouritesPageComponent
   ],
   imports: [
     BrowserModule,

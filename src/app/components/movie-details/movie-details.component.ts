@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Movie } from 'src/app/models/Movie';
 import { MovieCredits } from 'src/app/models/MovieCredits';
 import { MovieDetails } from 'src/app/models/MovieDetails';
 import { MovieSearchResult } from 'src/app/models/MovieSearchResult';
@@ -24,7 +25,11 @@ export class MovieDetailsComponent implements OnInit {
     ngOnInit(): void {
         this.route.params.subscribe(params => {
             const movieId = +params['id'];
-            this.movieService.getMovieDetails(movieId).subscribe(movie => this.movie = movie);
+            this.movieService.getMovieDetails(movieId).subscribe(movie => {
+                this.movie = movie;
+                const favourites = JSON.parse(localStorage.getItem('favourites')) as Movie[] | null;
+                this.favourite = !!favourites?.find(m => m.id === this.movie.id);
+            });
             this.movieService.getMovieCredits(movieId).subscribe(credits => this.credits = credits);
             this.movieService.getRecommendationsForMovie(movieId).subscribe(recommendations => this.recommendations = recommendations);
         });
@@ -44,6 +49,22 @@ export class MovieDetailsComponent implements OnInit {
 
     getProductionCompanies(): string {
         return this.movie.production_companies.map(c => `${c.name} (${c.origin_country})`).join(', ');
+    }
+
+    setFavourite() {
+        let favourites = JSON.parse(localStorage.getItem('favourites')) as Movie[] | null || [];
+        if (this.favourite) {
+            favourites = favourites.filter(m => m.id !== this.movie.id)
+        } else {
+            favourites.push({
+                id: this.movie.id,
+                title: this.movie.title,
+                overview: this.movie.overview,
+                poster_path: this.movie.poster_path
+            });
+        }
+        this.favourite = !this.favourite;
+        localStorage.setItem('favourites', JSON.stringify(favourites));
     }
 
 }

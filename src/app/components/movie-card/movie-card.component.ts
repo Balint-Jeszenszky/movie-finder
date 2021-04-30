@@ -13,10 +13,19 @@ export class MovieCardComponent implements OnInit {
     constructor() { }
 
     ngOnInit(): void {
+        const favourites = JSON.parse(localStorage.getItem('favourites')) as Movie[] | null;
+        this.favourite = !!favourites?.find(m => m.id === this.movie.id);
     }
 
     setFavourite() {
+        let favourites = JSON.parse(localStorage.getItem('favourites')) as Movie[] | null || [];
+        if (this.favourite) {
+            favourites = favourites.filter(m => m.id !== this.movie.id)
+        } else {
+            favourites.push(this.movie);
+        }
         this.favourite = !this.favourite;
+        localStorage.setItem('favourites', JSON.stringify(favourites));
     }
 
 }

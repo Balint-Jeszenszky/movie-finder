@@ -16,6 +16,7 @@ import { FavouritesPageComponent } from './components/favourites-page/favourites
 import { PersonCardComponent } from './components/person-card/person-card.component';
 import { TvCardComponent } from './components/tv-card/tv-card.component';
 import { TvDetailsComponent } from './components/tv-details/tv-details.component';
+import { FooterComponent } from './components/footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { TvDetailsComponent } from './components/tv-details/tv-details.component
     FavouritesPageComponent,
     PersonCardComponent,
     TvCardComponent,
-    TvDetailsComponent
+    TvDetailsComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,

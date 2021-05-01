@@ -1,5 +1,24 @@
 # MovieFinder
 
+## About this project
+
+This project is my client side technologies homework (BME VIK AUT VIAUAC02)
+
+## Setup
+
+You need Node.js and NPM (automatically installed with Node), I used Node.js v12.18.4. and NPM v7.11.1
+
+Navigate to the root folder and run the `npm install` command
+
+Before you use it, set your api key in src/app/services/apiKey.ts
+
+You can get an api key here: [The Movie Database](https://www.themoviedb.org/settings/api)
+
+For running and building see the generated instructions below
+
+
+# Generated stuff by angular if you need it
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.2.10.
 
 ## Development server

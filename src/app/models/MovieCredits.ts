@@ -12,6 +12,10 @@ interface Crew {
     profile_path?: string;
 }
 
+/**
+ * this interface contains the relevant fields for
+ * a movie's or tv show's credits
+ */
 export interface MovieCredits {
     id: number;
     cast: Cast[];

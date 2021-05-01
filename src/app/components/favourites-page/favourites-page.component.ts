@@ -9,8 +9,19 @@ import { Tv } from 'src/app/models/Tv';
     styleUrls: ['./favourites-page.component.css']
 })
 export class FavouritesPageComponent implements OnInit {
+    /**
+     * array of the user's favourite movies
+     */
     favouriteMovies: Movie[];
+
+    /**
+     * array of the user's favourite tv shows
+     */
     favouriteTvs: Tv[];
+
+    /**
+     * array of the user's favourite people
+     */
     favouritePeople: Person[];
 
     constructor() { }

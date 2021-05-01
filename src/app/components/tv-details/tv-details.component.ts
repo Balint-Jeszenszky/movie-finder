@@ -12,9 +12,24 @@ import { MovieService } from 'src/app/services/movie.service';
     styleUrls: ['./tv-details.component.css']
 })
 export class TvDetailsComponent implements OnInit {
+    /**
+     * the tv show that the page displays
+     */
     tv: TvDetails;
+
+    /**
+     * boolean value showing if this tv show marked as a favourite
+     */
     favourite: boolean;
+
+    /**
+     * credits for this tv show
+     */
     credits: MovieCredits;
+
+    /**
+     * recommended similar tv shows
+     */
     recommendations: TvSearchResult;
 
     constructor(
@@ -35,14 +50,25 @@ export class TvDetailsComponent implements OnInit {
         });
     }
 
+    /**
+     * all spoken language concatenated as a string with a comma and a space
+     * @returns a string of the tv show's all spoken languages
+     */
     getSpokenLanguages(): string {
         return this.tv.spoken_languages.map(l => l.name).join(', ');
     }
 
+    /**
+     * all genres concatenated as a string with a comma and a space
+     * @returns a string of the tv show's all genres
+     */
     getGenres(): string {
         return this.tv.genres.map(g => g.name).join(', ');
     }
 
+    /**
+     * sets or resets the tv show as a favouirite if called
+     */
     setFavourite() {
         let favourites = JSON.parse(localStorage.getItem('favourite-tvshows')) as Tv[] | null || [];
         if (this.favourite) {

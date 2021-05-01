@@ -9,8 +9,19 @@ import { MovieService } from 'src/app/services/movie.service';
     styleUrls: ['./movie-list.component.css']
 })
 export class MovieListComponent implements OnInit {
+    /**
+     * a list of movies to display on the page
+     */
     movies: Movie[];
+
+    /**
+     * the total number of pages
+     */
     totalPages: number;
+
+    /**
+     * the current page
+     */
     page: number;
 
     constructor(

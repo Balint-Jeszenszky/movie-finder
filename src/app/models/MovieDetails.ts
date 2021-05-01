@@ -1,3 +1,7 @@
+/**
+ * this interface contains the relevant fields for
+ * movie and tv show's genre
+ */
 export interface Genre {
     id: number;
     name: string;
@@ -15,11 +19,19 @@ interface ProductionCountry {
     name: string;
 }
 
+/**
+ * this interface contains the relevant fields for
+ * movie and tv show's langguage
+ */
 export interface SpokenLanguage {
     iso_639_1: string;
     name: string;
 }
 
+/**
+ * this interface contains the relevant fields for
+ * movie's details
+ */
 export interface MovieDetails {
     id: number;
     title: string;

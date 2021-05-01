@@ -7,7 +7,14 @@ import { Movie } from '../../models/Movie';
     styleUrls: ['./movie-card.component.css']
 })
 export class MovieCardComponent implements OnInit {
+    /**
+     * the movie that the card displays
+     */
     @Input() movie: Movie;
+
+    /**
+     * boolean value showing if this movie marked as a favourite
+     */
     favourite: boolean;
 
     constructor() { }
@@ -17,6 +24,9 @@ export class MovieCardComponent implements OnInit {
         this.favourite = !!favourites?.find(m => m.id === this.movie.id);
     }
 
+    /**
+     * sets or resets the movie as a favouirite if called
+     */
     setFavourite() {
         let favourites = JSON.parse(localStorage.getItem('favourite-movies')) as Movie[] | null || [];
         if (this.favourite) {

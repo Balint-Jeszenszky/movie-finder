@@ -11,14 +11,49 @@ import { MovieService } from 'src/app/services/movie.service';
     styleUrls: ['./search-page.component.css']
 })
 export class SearchPageComponent implements OnInit {
+    /**
+     * the search string
+     */
     search: string;
+
+    /**
+     * array of movies to show as a result
+     */
     movies: Movie[];
+
+    /**
+     * array of people to show as a result
+     */
     people: Person[];
+
+    /**
+     * array of tv shows to show as a result
+     */
     tvShows: Tv[];
+
+    /**
+     * the current page number
+     */
     page: number;
+
+    /**
+     * number of pages available for this search
+     */
     totalPages: number;
+
+    /**
+     * number of results for a search
+     */
     results: number;
+
+    /**
+     * available search types
+     */
     searchTypes = ['movie', 'person', 'tv'];
+
+    /**
+     * type of the search
+     */
     searchType: 'movie' | 'person' | 'tv';
 
     constructor(
@@ -59,10 +94,17 @@ export class SearchPageComponent implements OnInit {
         }
     }
 
+    /**
+     * set the query parameters in the url for a search
+     */
     onSubmit() {
         this.router.navigate(['/search'], { queryParams: { search: this.search, page: 1 }, queryParamsHandling: 'merge' });
     }
 
+    /**
+     * the results nummber range on the page
+     * @returns an object with keys 'from' and 'to' as the start and end of the range
+     */
     resultNumber() {
         const resultsPerPage = this.movies?.length || this.people?.length || this.tvShows?.length;
         const page = this.page;
@@ -71,6 +113,10 @@ export class SearchPageComponent implements OnInit {
         return {from, to};
     }
 
+    /**
+     * type of ther search
+     * @param event type selection change event in radio button
+     */
     typeChange(event) {
         this.router.navigate(['/search'], { queryParams: { search: '', page: 1, type: event.target.value }, queryParamsHandling: 'merge' });
     }

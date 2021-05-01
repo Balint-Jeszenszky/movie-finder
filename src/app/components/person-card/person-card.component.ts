@@ -7,7 +7,14 @@ import { Person } from 'src/app/models/Person';
     styleUrls: ['./person-card.component.css']
 })
 export class PersonCardComponent implements OnInit {
+    /**
+     * the person that the card displays
+     */
     @Input() person: Person;
+
+    /**
+     * boolean value showing if this person marked as a favourite
+     */
     favourite: boolean;
 
     constructor() { }
@@ -17,6 +24,9 @@ export class PersonCardComponent implements OnInit {
         this.favourite = !!favourites?.find(m => m.id === this.person.id);
     }
 
+    /**
+     * sets or resets the person as a favouirite if called
+     */
     setFavourite() {
         let favourites = JSON.parse(localStorage.getItem('favourite-people')) as Person[] | null || [];
         if (this.favourite) {

@@ -11,8 +11,19 @@ import { MovieService } from 'src/app/services/movie.service';
     styleUrls: ['./person-details.component.css']
 })
 export class PersonDetailsComponent implements OnInit {
+    /**
+     * the person that the page displays
+     */
     person: PersonDetails;
+
+    /**
+     * boolean value showing if this person marked as a favourite
+     */
     favourite: boolean;
+
+    /**
+     * movie credits for this person
+     */
     movieCredits: PersonMovieCredits;
 
     constructor(
@@ -32,6 +43,10 @@ export class PersonDetailsComponent implements OnInit {
         });
     }
 
+    /**
+     * person's gender converted from the number to string representation
+     * @returns the person's gender as a string
+     */
     getGender() {
         switch (this.person.gender) {
             case 0:
@@ -45,6 +60,9 @@ export class PersonDetailsComponent implements OnInit {
         }
     }
 
+    /**
+     * sets or resets the person as a favouirite if called
+     */
     setFavourite() {
         let favourites = JSON.parse(localStorage.getItem('favourite-movies')) as Person[] | null || [];
         if (this.favourite) {

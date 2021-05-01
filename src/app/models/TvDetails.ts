@@ -17,6 +17,10 @@ interface Season {
     season_number: number;
 }
 
+/**
+ * this interface contains the relevant fields for
+ * a tv show's details
+ */
 export interface TvDetails {
     id: number;
     first_air_date: string;

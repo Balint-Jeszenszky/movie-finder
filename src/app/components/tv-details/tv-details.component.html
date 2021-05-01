@@ -68,7 +68,7 @@
         </div>
     </div>
     <div *ngIf="recommendations">
-        <h3>Similar tv shows</h3>
+        <h2>Similar tv shows</h2>
         <div class="row">
             <div class="col-6 col-md-4 col-lg-3 col-xl-2" *ngFor="let tv of recommendations.results">
                 <a routerLink="/tv/{{tv.id}}"><img class="img-thumbnail"

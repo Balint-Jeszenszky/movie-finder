@@ -1,3 +1,7 @@
+/**
+ * this interface contains the relevant fields for
+ * a person's details
+ */
 export interface PersonDetails {
     id: number;
     birthday?: string;

@@ -7,8 +7,20 @@ import { ActivatedRoute } from '@angular/router';
     styleUrls: ['./pager.component.css']
 })
 export class PagerComponent implements OnInit {
+    /**
+     * number of all available pages
+     */
     @Input() pages: number;
+
+    /**
+     * the page's url
+     * pager sets the page number after it
+     */
     @Input() baseUrl: string;
+
+    /**
+     * the current page's number
+     */
     page: number;
 
     constructor(private route: ActivatedRoute) { }
@@ -20,6 +32,10 @@ export class PagerComponent implements OnInit {
         });
     }
 
+    /**
+     * generates an array of numbers to show on the pager
+     * @returns number array
+     */
     getPageNumbers() {
         const diff = this.pages - this.page;
         const start = Math.max(1, this.page - 2 - ((diff < 3) ? 3 - diff : 0));
@@ -27,6 +43,11 @@ export class PagerComponent implements OnInit {
         return [...Array(n).keys()].map(i => i + start );
     }
 
+    /**
+     * dinammically sets the page number's classes
+     * @param n the page number oon the pager
+     * @returns the classes for a pager number
+     */
     getClasses(n: number) {
         return {
             'page-item': true,

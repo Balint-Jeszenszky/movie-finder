@@ -4,6 +4,8 @@ import { Movie } from 'src/app/models/Movie';
 import { Person } from 'src/app/models/Person';
 import { Tv } from 'src/app/models/Tv';
 import { MovieService } from 'src/app/services/movie.service';
+import { PersonService } from 'src/app/services/person.service';
+import { TvService } from 'src/app/services/tv.service';
 
 @Component({
     selector: 'app-search-page',
@@ -58,6 +60,8 @@ export class SearchPageComponent implements OnInit {
 
     constructor(
         private movieService: MovieService,
+        private personService: PersonService,
+        private tvService: TvService,
         private route: ActivatedRoute,
         private router: Router
     ) {
@@ -80,13 +84,13 @@ export class SearchPageComponent implements OnInit {
                 this.results = movies.total_results;
             });
         } else if (this.search && this.searchType === 'person') {
-            this.movieService.getPeopleBySearchString(this.search, this.page).subscribe(people => {
+            this.personService.getPeopleBySearchString(this.search, this.page).subscribe(people => {
                 this.people = people.results;
                 this.totalPages = people.total_pages;
                 this.results = people.total_results;
             });
         } else if (this.search && this.searchType === 'tv') {
-            this.movieService.getTvBySearchString(this.search, this.page).subscribe(tv => {
+            this.tvService.getTvBySearchString(this.search, this.page).subscribe(tv => {
                 this.tvShows = tv.results;
                 this.totalPages = tv.total_pages;
                 this.results = tv.total_results;

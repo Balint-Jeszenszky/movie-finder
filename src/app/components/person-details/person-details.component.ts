@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Person } from 'src/app/models/Person';
 import { PersonDetails } from 'src/app/models/PersonDetails';
 import { PersonMovieCredits } from 'src/app/models/PersonMovieCredits';
-import { MovieService } from 'src/app/services/movie.service';
+import { PersonService } from 'src/app/services/person.service';
 
 @Component({
     selector: 'app-person-details',
@@ -27,19 +27,19 @@ export class PersonDetailsComponent implements OnInit {
     movieCredits: PersonMovieCredits;
 
     constructor(
-        private movieService: MovieService,
+        private personService: PersonService,
         private route: ActivatedRoute
     ) { }
 
     ngOnInit(): void {
         this.route.params.subscribe(params => {
             const personId = +params['id'];
-            this.movieService.getPersonDetails(personId).subscribe(person => {
+            this.personService.getPersonDetails(personId).subscribe(person => {
                 this.person = person;
                 const favourites = JSON.parse(localStorage.getItem('favourite-people')) as Person[] | null;
                 this.favourite = !!favourites?.find(m => m.id === this.person.id);
             });
-            this.movieService.getPersonMovies(personId).subscribe(movieCredits => this.movieCredits = movieCredits);
+            this.personService.getPersonMovies(personId).subscribe(movieCredits => this.movieCredits = movieCredits);
         });
     }
 

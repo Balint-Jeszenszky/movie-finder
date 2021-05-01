@@ -4,7 +4,7 @@ import { MovieCredits } from 'src/app/models/MovieCredits';
 import { Tv } from 'src/app/models/Tv';
 import { TvDetails } from 'src/app/models/TvDetails';
 import { TvSearchResult } from 'src/app/models/TvSearchResult';
-import { MovieService } from 'src/app/services/movie.service';
+import { TvService } from 'src/app/services/tv.service';
 
 @Component({
     selector: 'app-tv-details',
@@ -33,20 +33,20 @@ export class TvDetailsComponent implements OnInit {
     recommendations: TvSearchResult;
 
     constructor(
-        private movieService: MovieService,
+        private tvService: TvService,
         private route: ActivatedRoute
     ) { }
 
     ngOnInit(): void {
         this.route.params.subscribe(params => {
             const tvId = +params['id'];
-            this.movieService.getTvDetails(tvId).subscribe(tv => {
+            this.tvService.getTvDetails(tvId).subscribe(tv => {
                 this.tv = tv;
                 const favourites = JSON.parse(localStorage.getItem('favourite-tvshows')) as Tv[] | null;
                 this.favourite = !!favourites?.find(m => m.id === this.tv.id);
             });
-            this.movieService.getTvCredits(tvId).subscribe(credits => this.credits = credits);
-            this.movieService.getRecommendationsForTv(tvId).subscribe(recommendations => this.recommendations = recommendations);
+            this.tvService.getTvCredits(tvId).subscribe(credits => this.credits = credits);
+            this.tvService.getRecommendationsForTv(tvId).subscribe(recommendations => this.recommendations = recommendations);
         });
     }
 

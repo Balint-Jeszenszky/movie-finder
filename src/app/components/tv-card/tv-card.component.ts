@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Tv } from 'src/app/models/Tv';
+import { FavouriteTvsService } from 'src/app/services/favourite-tvs.service';
 
 @Component({
     selector: 'app-tv-card',
@@ -17,25 +18,25 @@ export class TvCardComponent implements OnInit {
      */
     favourite: boolean;
 
-    constructor() { }
+    constructor(private favouriteTvsService: FavouriteTvsService) { }
 
     ngOnInit(): void {
-        const favourites = JSON.parse(localStorage.getItem('favourite-tvshows')) as Tv[] | null;
-        this.favourite = !!favourites?.find(t => t.id === this.tv.id);
+        this.favouriteTvsService.getFavourites().subscribe(favourites => {
+            this.favourite = !!favourites.find(t => t.id === this.tv.id);
+        });
     }
 
     /**
      * sets or resets the tv show as a favouirite if called
      */
     setFavourite() {
-        let favourites = JSON.parse(localStorage.getItem('favourite-tvshows')) as Tv[] | null || [];
         if (this.favourite) {
-            favourites = favourites.filter(m => m.id !== this.tv.id)
+            if (confirm(`Remove ${this.tv.name} from favourites?`)) {
+                this.favouriteTvsService.removeFavourite(this.tv);
+            }
         } else {
-            favourites.push(this.tv);
+            this.favouriteTvsService.addFavourite(this.tv);
         }
-        this.favourite = !this.favourite;
-        localStorage.setItem('favourite-tvshows', JSON.stringify(favourites));
     }
 
 }

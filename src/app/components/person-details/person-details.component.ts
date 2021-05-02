@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Person } from 'src/app/models/Person';
 import { PersonDetails } from 'src/app/models/PersonDetails';
 import { PersonMovieCredits } from 'src/app/models/PersonMovieCredits';
+import { FavouritePeopleService } from 'src/app/services/favourite-people.service';
 import { PersonService } from 'src/app/services/person.service';
 
 @Component({
@@ -28,7 +29,8 @@ export class PersonDetailsComponent implements OnInit {
 
     constructor(
         private personService: PersonService,
-        private route: ActivatedRoute
+        private route: ActivatedRoute,
+        private favouritePeolpeService: FavouritePeopleService
     ) { }
 
     ngOnInit(): void {
@@ -36,8 +38,9 @@ export class PersonDetailsComponent implements OnInit {
             const personId = +params['id'];
             this.personService.getPersonDetails(personId).subscribe(person => {
                 this.person = person;
-                const favourites = JSON.parse(localStorage.getItem('favourite-people')) as Person[] | null;
-                this.favourite = !!favourites?.find(m => m.id === this.person.id);
+                this.favouritePeolpeService.getFavourites().subscribe(favourites => {
+                    this.favourite = !!favourites.find(p => p.id === this.person.id);
+                });
             });
             this.personService.getPersonMovies(personId).subscribe(movieCredits => this.movieCredits = movieCredits);
         });
@@ -64,19 +67,13 @@ export class PersonDetailsComponent implements OnInit {
      * sets or resets the person as a favouirite if called
      */
     setFavourite() {
-        let favourites = JSON.parse(localStorage.getItem('favourite-movies')) as Person[] | null || [];
         if (this.favourite) {
-            favourites = favourites.filter(m => m.id !== this.person.id)
+            if (confirm(`Remove ${this.person.name} from favourites?`)) {
+                this.favouritePeolpeService.removeFavourite(this.person);
+            }
         } else {
-            favourites.push({
-                id: this.person.id,
-                name: this.person.name,
-                known_for_department: this.person.known_for_department,
-                profile_path: this.person.profile_path
-            });
+            this.favouritePeolpeService.addFavourite(this.person);
         }
-        this.favourite = !this.favourite;
-        localStorage.setItem('favourite-movies', JSON.stringify(favourites));
     }
 
 }

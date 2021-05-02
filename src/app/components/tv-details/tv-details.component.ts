@@ -4,6 +4,7 @@ import { MovieCredits } from 'src/app/models/MovieCredits';
 import { Tv } from 'src/app/models/Tv';
 import { TvDetails } from 'src/app/models/TvDetails';
 import { TvSearchResult } from 'src/app/models/TvSearchResult';
+import { FavouriteTvsService } from 'src/app/services/favourite-tvs.service';
 import { TvService } from 'src/app/services/tv.service';
 
 @Component({
@@ -34,7 +35,8 @@ export class TvDetailsComponent implements OnInit {
 
     constructor(
         private tvService: TvService,
-        private route: ActivatedRoute
+        private route: ActivatedRoute,
+        private favouriteTvsService: FavouriteTvsService
     ) { }
 
     ngOnInit(): void {
@@ -42,8 +44,9 @@ export class TvDetailsComponent implements OnInit {
             const tvId = +params['id'];
             this.tvService.getTvDetails(tvId).subscribe(tv => {
                 this.tv = tv;
-                const favourites = JSON.parse(localStorage.getItem('favourite-tvshows')) as Tv[] | null;
-                this.favourite = !!favourites?.find(m => m.id === this.tv.id);
+                this.favouriteTvsService.getFavourites().subscribe(favourites => {
+                    this.favourite = !!favourites.find(t => t.id === this.tv.id);
+                });
             });
             this.tvService.getTvCredits(tvId).subscribe(credits => this.credits = credits);
             this.tvService.getRecommendationsForTv(tvId).subscribe(recommendations => this.recommendations = recommendations);
@@ -70,19 +73,13 @@ export class TvDetailsComponent implements OnInit {
      * sets or resets the tv show as a favouirite if called
      */
     setFavourite() {
-        let favourites = JSON.parse(localStorage.getItem('favourite-tvshows')) as Tv[] | null || [];
         if (this.favourite) {
-            favourites = favourites.filter(m => m.id !== this.tv.id)
+            if (confirm(`Remove ${this.tv.name} from favourites?`)) {
+                this.favouriteTvsService.removeFavourite(this.tv);
+            }
         } else {
-            favourites.push({
-                id: this.tv.id,
-                name: this.tv.name,
-                overview: this.tv.overview,
-                poster_path: this.tv.poster_path
-            });
+            this.favouriteTvsService.addFavourite(this.tv);
         }
-        this.favourite = !this.favourite;
-        localStorage.setItem('favourite-tvshows', JSON.stringify(favourites));
     }
 
 }

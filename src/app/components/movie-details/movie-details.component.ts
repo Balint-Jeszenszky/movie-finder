@@ -4,6 +4,7 @@ import { Movie } from 'src/app/models/Movie';
 import { MovieCredits } from 'src/app/models/MovieCredits';
 import { MovieDetails } from 'src/app/models/MovieDetails';
 import { MovieSearchResult } from 'src/app/models/MovieSearchResult';
+import { FavouriteMoviesService } from 'src/app/services/favourite-movies.service';
 import { MovieService } from 'src/app/services/movie.service';
 
 @Component({
@@ -12,6 +13,7 @@ import { MovieService } from 'src/app/services/movie.service';
     styleUrls: ['./movie-details.component.css']
 })
 export class MovieDetailsComponent implements OnInit {
+    private m: Movie;
     /**
      * the movie that the page displays
      */
@@ -34,7 +36,8 @@ export class MovieDetailsComponent implements OnInit {
 
     constructor(
         private movieService: MovieService,
-        private route: ActivatedRoute
+        private route: ActivatedRoute,
+        private favouriteMoviesService: FavouriteMoviesService
     ) { }
 
     ngOnInit(): void {
@@ -42,8 +45,15 @@ export class MovieDetailsComponent implements OnInit {
             const movieId = +params['id'];
             this.movieService.getMovieDetails(movieId).subscribe(movie => {
                 this.movie = movie;
-                const favourites = JSON.parse(localStorage.getItem('favourite-movies')) as Movie[] | null;
-                this.favourite = !!favourites?.find(m => m.id === this.movie.id);
+                this.m = {
+                    id: this.movie.id,
+                    title: this.movie.title,
+                    overview: this.movie.overview,
+                    poster_path: this.movie.poster_path
+                };
+                this.favouriteMoviesService.getFavourites().subscribe(favourites => {
+                    this.favourite = !!favourites.find(m => m.id === this.movie.id);
+                });
             });
             this.movieService.getMovieCredits(movieId).subscribe(credits => this.credits = credits);
             this.movieService.getRecommendationsForMovie(movieId).subscribe(recommendations => this.recommendations = recommendations);
@@ -86,19 +96,13 @@ export class MovieDetailsComponent implements OnInit {
      * sets or resets the movie as a favouirite if called
      */
     setFavourite() {
-        let favourites = JSON.parse(localStorage.getItem('favourite-movies')) as Movie[] | null || [];
         if (this.favourite) {
-            favourites = favourites.filter(m => m.id !== this.movie.id)
+            if (confirm(`Remove ${this.movie.title} from favourites?`)) {
+                this.favouriteMoviesService.removeFavourite(this.m);
+            }
         } else {
-            favourites.push({
-                id: this.movie.id,
-                title: this.movie.title,
-                overview: this.movie.overview,
-                poster_path: this.movie.poster_path
-            });
+            this.favouriteMoviesService.addFavourite(this.m);
         }
-        this.favourite = !this.favourite;
-        localStorage.setItem('favourite-movies', JSON.stringify(favourites));
     }
 
 }

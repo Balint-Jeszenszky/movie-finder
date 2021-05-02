@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { FavouriteMoviesService } from 'src/app/services/favourite-movies.service';
 import { Movie } from '../../models/Movie';
 
 @Component({
@@ -17,25 +18,25 @@ export class MovieCardComponent implements OnInit {
      */
     favourite: boolean;
 
-    constructor() { }
+    constructor(private favouriteMoviesService: FavouriteMoviesService) { }
 
     ngOnInit(): void {
-        const favourites = JSON.parse(localStorage.getItem('favourite-movies')) as Movie[] | null;
-        this.favourite = !!favourites?.find(m => m.id === this.movie.id);
+        this.favouriteMoviesService.getFavourites().subscribe(favourites => {
+            this.favourite = !!favourites.find(m => m.id === this.movie.id);
+        });
     }
 
     /**
      * sets or resets the movie as a favouirite if called
      */
     setFavourite() {
-        let favourites = JSON.parse(localStorage.getItem('favourite-movies')) as Movie[] | null || [];
         if (this.favourite) {
-            favourites = favourites.filter(m => m.id !== this.movie.id)
+            if (confirm(`Remove ${this.movie.title} from favourites?`)) {
+                this.favouriteMoviesService.removeFavourite(this.movie);
+            }
         } else {
-            favourites.push(this.movie);
+            this.favouriteMoviesService.addFavourite(this.movie);
         }
-        this.favourite = !this.favourite;
-        localStorage.setItem('favourite-movies', JSON.stringify(favourites));
     }
 
 }

@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Person } from 'src/app/models/Person';
+import { FavouritePeopleService } from 'src/app/services/favourite-people.service';
 
 @Component({
     selector: 'app-person-card',
@@ -17,25 +18,25 @@ export class PersonCardComponent implements OnInit {
      */
     favourite: boolean;
 
-    constructor() { }
+    constructor(private favouritePeolpeService: FavouritePeopleService) { }
 
     ngOnInit(): void {
-        const favourites = JSON.parse(localStorage.getItem('favourite-people')) as Person[] | null;
-        this.favourite = !!favourites?.find(m => m.id === this.person.id);
+        this.favouritePeolpeService.getFavourites().subscribe(favourites => {
+            this.favourite = !!favourites.find(p => p.id === this.person.id);
+        });
     }
 
     /**
      * sets or resets the person as a favouirite if called
      */
     setFavourite() {
-        let favourites = JSON.parse(localStorage.getItem('favourite-people')) as Person[] | null || [];
         if (this.favourite) {
-            favourites = favourites.filter(m => m.id !== this.person.id)
+            if (confirm(`Remove ${this.person.name} from favourites?`)) {
+                this.favouritePeolpeService.removeFavourite(this.person);
+            }
         } else {
-            favourites.push(this.person);
+            this.favouritePeolpeService.addFavourite(this.person);
         }
-        this.favourite = !this.favourite;
-        localStorage.setItem('favourite-people', JSON.stringify(favourites));
     }
 
 }

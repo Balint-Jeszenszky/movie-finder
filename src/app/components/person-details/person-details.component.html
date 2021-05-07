@@ -20,29 +20,19 @@
     <div *ngIf="movieCredits && movieCredits.cast.length">
         <h2>Cast in movies</h2>
         <div class="row">
-            <div class="col-6 col-md-4 col-lg-3 col-xl-2" *ngFor="let movie of movieCredits.cast">
-                <a routerLink="/movie/{{movie.id}}">
-                    <img *ngIf="movie.poster_path" class="img-thumbnail" [src]="'https://image.tmdb.org/t/p/w500/' + movie.poster_path">
-                    <img *ngIf="!movie.poster_path" class="img-thumbnail" src="http://via.placeholder.com/500x750.png?text=No+image+available">
-                </a>
-                <p class="m-0"><b><a class="text-dark" routerLink="/movie/{{movie.id}}">{{ movie.title }}</a></b></p>
-                <p class="m-0">{{ movie.overview.substr(0, 30).split(' ').slice(0, -1).join(' ') }} ...</p>
-                <p>(As {{ movie.character }})</p>
-            </div>
+            <app-small-frame *ngFor="let movie of movieCredits.cast" class="col-6 col-md-4 col-lg-3 col-xl-2"
+                [title]="movie.title" [description]="movie.overview.substr(0, 30).split(' ').slice(0, -1).join(' ') + '...'" 
+                [link]="'/movie/' + movie.id" [imageUrl]="movie.poster_path && 'https://image.tmdb.org/t/p/w500/' + movie.poster_path" >
+            </app-small-frame>
         </div>
     </div>
     <div *ngIf="movieCredits && movieCredits.crew.length">
         <h2>Crew in movies</h2>
         <div class="row">
-            <div class="col-6 col-md-4 col-lg-3 col-xl-2" *ngFor="let movie of movieCredits.crew">
-                <a routerLink="/movie/{{movie.id}}">
-                    <img *ngIf="movie.poster_path" class="img-thumbnail" [src]="'https://image.tmdb.org/t/p/w500/' + movie.poster_path">
-                    <img *ngIf="!movie.poster_path" class="img-thumbnail" src="http://via.placeholder.com/500x750.png?text=No+image+available">
-                </a>
-                <p class="m-0"><b><a class="text-dark" routerLink="/movie/{{movie.id}}">{{ movie.title }}</a></b></p>
-                <p class="m-0">{{ movie.overview.substr(0, 30).split(' ').slice(0, -1).join(' ') }} ...</p>
-                <p>(As {{ movie.job }})</p>
-            </div>
+            <app-small-frame *ngFor="let movie of movieCredits.crew" class="col-6 col-md-4 col-lg-3 col-xl-2"
+                [title]="movie.title" [description]="movie.overview.substr(0, 30).split(' ').slice(0, -1).join(' ') + '...'" 
+                [link]="'/movie/' + movie.id" [imageUrl]="movie.poster_path && 'https://image.tmdb.org/t/p/w500/' + movie.poster_path" >
+            </app-small-frame>
         </div>
     </div>
 </div>

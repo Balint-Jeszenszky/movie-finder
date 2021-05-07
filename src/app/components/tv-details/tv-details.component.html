@@ -43,39 +43,27 @@
             <h2>Credits</h2>
             <h3>Cast</h3>
             <div class="row">
-                <div *ngFor="let person of credits.cast" class="col-6 col-md-4 col-lg-3 col-xl-2">
-                    <a routerLink="/person/{{person.id}}" *ngIf="person.profile_path"><img class="img-thumbnail"
-                            [src]="'https://image.tmdb.org/t/p/w500/' + person.profile_path"></a>
-                    <a routerLink="/person/{{person.id}}" *ngIf="!person.profile_path"><img class="img-thumbnail"
-                            src="http://via.placeholder.com/500x750.png?text=No+image+available"></a>
-                    <p class="m-0"><b><a class="text-dark" routerLink="/person/{{person.id}}">{{ person.name }}</a></b>
-                    </p>
-                    <p>{{ person.character }}</p>
-                </div>
+                <app-small-frame *ngFor="let person of credits.cast" class="col-6 col-md-4 col-lg-3 col-xl-2"
+                    [title]="person.name" [description]="person.character"
+                    [link]="'/person/' + person.id" [imageUrl]="person.profile_path && 'https://image.tmdb.org/t/p/w500/' + person.profile_path" >
+                </app-small-frame>
             </div>
             <h3>Crew</h3>
             <div class="row">
-                <div *ngFor="let person of credits.crew" class="col-6 col-md-4 col-lg-3 col-xl-2">
-                    <a routerLink="/person/{{person.id}}" *ngIf="person.profile_path"><img class="img-thumbnail"
-                            [src]="'https://image.tmdb.org/t/p/w500/' + person.profile_path"></a>
-                    <a routerLink="/person/{{person.id}}" *ngIf="!person.profile_path"><img class="img-thumbnail"
-                            src="http://via.placeholder.com/500x750.png?text=No+image+available"></a>
-                    <p class="m-0"><b><a class="text-dark" routerLink="/person/{{person.id}}">{{ person.name }}</a></b>
-                    </p>
-                    <p>{{ person.job }}</p>
-                </div>
+                <app-small-frame *ngFor="let person of credits.crew" class="col-6 col-md-4 col-lg-3 col-xl-2"
+                    [title]="person.name" [description]="person.job"
+                    [link]="'/person/' + person.id" [imageUrl]="person.profile_path && 'https://image.tmdb.org/t/p/w500/' + person.profile_path" >
+                </app-small-frame>
             </div>
         </div>
     </div>
     <div *ngIf="recommendations">
         <h2>Similar tv shows</h2>
         <div class="row">
-            <div class="col-6 col-md-4 col-lg-3 col-xl-2" *ngFor="let tv of recommendations.results">
-                <a routerLink="/tv/{{tv.id}}"><img class="img-thumbnail"
-                        [src]="'https://image.tmdb.org/t/p/w500/' + tv.poster_path"></a>
-                <p class="m-0"><b><a class="text-dark" routerLink="/tv/{{tv.id}}">{{ tv.name }}</a></b></p>
-                <p>{{ tv.overview.substr(0, 30).split(' ').slice(0, -1).join(' ') }} ...</p>
-            </div>
+            <app-small-frame *ngFor="let tv of recommendations.results" class="col-6 col-md-4 col-lg-3 col-xl-2"
+                [title]="tv.name" [description]="tv.overview.substr(0, 30).split(' ').slice(0, -1).join(' ') + '...'"
+                [link]="'/tv/' + tv.id" [imageUrl]="tv.poster_path && 'https://image.tmdb.org/t/p/w500/' + tv.poster_path" >
+            </app-small-frame>
         </div>
     </div>
 </div>

@@ -1,0 +1,7 @@
+<div>
+    <a routerLink="{{link}}" *ngIf="imageUrl"><img class="img-thumbnail" [src]="'https://image.tmdb.org/t/p/w500/' + imageUrl"></a>
+    <a routerLink="{{link}}" *ngIf="!imageUrl"><img class="img-thumbnail" src="http://via.placeholder.com/500x750.png?text=No+image+available"></a>
+    <p class="m-0"><b><a class="text-dark" routerLink="{{link}}">{{ title }}</a></b>
+    </p>
+    <p>{{ description }}</p>
+</div>

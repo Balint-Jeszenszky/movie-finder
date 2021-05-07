@@ -17,6 +17,7 @@ import { PersonCardComponent } from './components/person-card/person-card.compon
 import { TvCardComponent } from './components/tv-card/tv-card.component';
 import { TvDetailsComponent } from './components/tv-details/tv-details.component';
 import { FooterComponent } from './components/footer/footer.component';
+import { SmallFrameComponent } from './components/small-frame/small-frame.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { FooterComponent } from './components/footer/footer.component';
     PersonCardComponent,
     TvCardComponent,
     TvDetailsComponent,
-    FooterComponent
+    FooterComponent,
+    SmallFrameComponent
   ],
   imports: [
     BrowserModule,
